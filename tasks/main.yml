@@ -1,2 +1,70 @@
 ---
-# tasks file for ansible-role-zeppelin
+- name: Include OS family specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Create the zeppelin group
+  group:
+    name: zeppelin
+    state: present
+    system: yes
+
+- name: Create the zeppelin user
+  user:
+    name: zeppelin
+    groups: zeppelin
+    append: yes
+    shell: /bin/bash
+
+- name: Download and install the required packages (yum)
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ zeppelin_packages }}"
+  when: ansible_os_family == "RedHat"
+
+- name: Download and install the required packages (apt)
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ zeppelin_packages }}"
+  when: ansible_os_family == "Debian"
+
+#
+# Install Zeppelin
+#
+- name: Check if the version of Zeppelin already exists
+  stat: path=/opt/zeppelin-{{ zeppelin_version }}
+  register: zeppelin_install_path
+
+- name: Download Zeppelin
+  get_url:
+    url: "{{ zeppelin_download_url }}"
+    dest: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
+  when: zeppelin_install_path.stat.exists == False
+
+- name: Create the Zeppelin install directory in /opt/
+  file:
+    path: "/opt/zeppelin-{{ zeppelin_version }}"
+    state: directory
+    owner: zeppelin
+    group: zeppelin
+    mode: 0755
+  when: zeppelin_install_path.stat.exists == False
+
+- name: Extract Zeppelin into the install directory
+  unarchive:
+    src: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
+    dest: "/opt/zeppelin-{{ zeppelin_version }}"
+    copy: no
+    owner: zeppelin
+    group: zeppelin
+  when: zeppelin_install_path.stat.exists == False
+
+- name: Create a symlink for /opt/zeppelin
+  file:
+    src: "/opt/zeppelin-{{ zeppelin_version }}"
+    dest: /opt/zeppelin
+    owner: zeppelin
+    group: zeppelin
+    state: link
+  when: zeppelin_install_path.stat.exists == False

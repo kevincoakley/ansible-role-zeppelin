@@ -1,0 +1,5 @@
+---
+zeppelin_packages:
+  - java-1.8.0-openjdk
+  - sudo
+java_home: /usr/lib/jvm/jre/
