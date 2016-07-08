@@ -1,0 +1,14 @@
+---
+docker_containers:
+  - name: ubuntu-system
+    image: kevincoakley/ubuntu16.04-systemd
+    ports:
+      - "2200:22"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup"
+  - name: centos-system
+    image: kevincoakley/centos7-systemd
+    ports:
+      - "2222:22"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup"

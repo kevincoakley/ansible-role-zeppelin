@@ -1,5 +1,47 @@
 ---
-- hosts: localhost
-  remote_user: root
+- name: Start the Docker containers
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - docker_containers.yml
+
+  vars:
+    - container_state: reloaded
+    - container_privileged: true
+
+  roles:
+    - docker
+
+  tags:
+    - docker-start
+
+
+- name: Test the Zeppelin role for CentOS and Ubuntu systems
+  hosts: zeppelin
+  become: yes
+  become_method: sudo
+
   roles:
     - ansible-role-zeppelin
+#    - zeppelin-test
+
+  tags:
+    - zeppelin
+
+
+- name: Stop the Docker containers
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - docker_containers.yml
+
+  vars:
+    - container_state: absent
+
+  roles:
+    - docker
+
+  tags:
+    - docker-stop
