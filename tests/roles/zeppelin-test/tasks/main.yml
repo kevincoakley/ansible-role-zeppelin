@@ -1,6 +1,7 @@
 ---
 - name: Give the Zeppelin time to start
-  pause: seconds=10
+  pause:
+    seconds: 20
 
 - name: Verify that Zeppelin is running on port 8080
   uri:
