@@ -14,6 +14,8 @@ before_install:
   - deactivate
   - sudo apt-get update -qq
   - sudo apt-get install -y -o Dpkg::Options::="--force-confnew" docker-engine
+  - mkdir -p ~/.ssh/
+  - printf "Host 127.0.0.1\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" > ~/.ssh/config
 
 install:
   - sudo pip install docker-py
