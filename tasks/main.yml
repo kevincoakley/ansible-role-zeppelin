@@ -42,19 +42,10 @@
     dest: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
   when: zeppelin_install_path.stat.exists == False
 
-- name: Create the Zeppelin install directory in /opt/
-  file:
-    path: "/opt/zeppelin-{{ zeppelin_version }}"
-    state: directory
-    owner: zeppelin
-    group: zeppelin
-    mode: 0755
-  when: zeppelin_install_path.stat.exists == False
-
 - name: Extract Zeppelin into the install directory
   unarchive:
     src: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
-    dest: "/opt/zeppelin-{{ zeppelin_version }}"
+    dest: "/opt/"
     copy: no
     owner: zeppelin
     group: zeppelin
@@ -62,7 +53,7 @@
 
 - name: Create a symlink for /opt/zeppelin
   file:
-    src: "/opt/zeppelin-{{ zeppelin_version }}"
+    src: "/opt/zeppelin-{{ zeppelin_version }}-bin-all"
     dest: /opt/zeppelin
     owner: zeppelin
     group: zeppelin
