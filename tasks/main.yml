@@ -33,7 +33,8 @@
 # Install Zeppelin
 #
 - name: Check if the version of Zeppelin already exists
-  stat: path=/opt/zeppelin-{{ zeppelin_version }}
+  stat:
+    path: "/opt/zeppelin-{{ zeppelin_version }}-bin-all"
   register: zeppelin_install_path
 
 - name: Download Zeppelin
