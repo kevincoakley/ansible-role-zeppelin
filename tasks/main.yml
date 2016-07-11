@@ -61,13 +61,23 @@
     state: link
   when: zeppelin_install_path.stat.exists == False
 
-- name: Create the Zeppelin config file
+- name: Create the Zeppelin Site config file
   template:
     src: zeppelin-site.xml.j2
     dest: /opt/zeppelin/conf/zeppelin-site.xml
     owner: zeppelin
     group: zeppelin
     mode: 0644
+  notify: restart zeppelin
+
+- name: Create the Zeppelin ENV config file
+  template:
+    src: zeppelin-env.sh.j2
+    dest: /opt/zeppelin/conf/zeppelin-env.sh
+    owner: zeppelin
+    group: zeppelin
+    mode: 0644
+  notify: restart zeppelin
 
 # In order to prevent the "restart zeppelin" handler from running when the "service" tag is skipped, set the
 # service_control fact to False and only set the service_control fact to True if the "service" tag isn't skipped.

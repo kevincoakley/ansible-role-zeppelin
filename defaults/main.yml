@@ -2,6 +2,8 @@
 zeppelin_version: 0.6.0
 zeppelin_download_url: http://www-us.apache.org/dist/zeppelin/zeppelin-{{ zeppelin_version }}/zeppelin-{{ zeppelin_version }}-bin-all.tgz
 
+# Config options for zeppelin-site.xml
+# See templates/zeppelin-site.xml.j2 for defaults.
 zeppelin_server_addr: 0.0.0.0
 zeppelin_server_port: 8080
 zeppelin_server_context_path: /
@@ -58,3 +60,11 @@ zeppelin_ssl_truststore_password: change me
 zeppelin_server_allowed_origins: "*"
 zeppelin_anonymous_allowed: true
 zeppelin_websocket_max_text_message_size: 1024000
+
+# Config options for zeppelin-env.sh
+# If empty the Zeppelin defaults will be used, see templates/zeppelin-env.sh.j2 for defaults.
+zeppelin_spark_master:
+zeppelin_java_opts:
+zeppelin_mem:
+zeppelin_intp_java_opts:
+zeppelin_intp_mem:
