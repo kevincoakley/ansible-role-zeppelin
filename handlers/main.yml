@@ -1,2 +1,7 @@
 ---
-# handlers file for ansible-role-zeppelin
+# Only restart the Zeppelin service when the service_control fact is True
+- name: restart zeppelin
+  service:
+    name: zookeeper
+    state: restarted
+  when: service_control == True

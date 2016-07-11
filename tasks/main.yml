@@ -68,3 +68,32 @@
     owner: zeppelin
     group: zeppelin
     mode: 0644
+
+# In order to prevent the "restart zeppelin" handler from running when the "service" tag is skipped, set the
+# service_control fact to False and only set the service_control fact to True if the "service" tag isn't skipped.
+# In the handler yaml, only run the task when service_control is True.
+- name: Set the service_control fact to False
+  set_fact: service_control=False
+
+- name: Change the service_control fact to True
+  set_fact: service_control=True
+  tags:
+     - service
+
+- name: Copy the Zeppelin systemd service file
+  copy:
+    src: "{{ role_path }}/files/zeppelin.service"
+    dest: /etc/systemd/system/zeppelin.service
+    owner: zeppelin
+    group: zeppelin
+    mode: 0644
+  tags:
+    - service
+
+- name: Ensure Zeppelin is started and enabled on boot
+  service:
+    name: zeppelin
+    state: started
+    enabled: yes
+  tags:
+     - service
