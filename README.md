@@ -1,6 +1,8 @@
 Role Name
 =========
 
+[![Build Status](https://travis-ci.org/kevincoakley/ansible-role-zeppelin.svg?branch=master)](https://travis-ci.org/kevincoakley/ansible-role-zeppelin)
+
 A brief description of the role goes here.
 
 Requirements
