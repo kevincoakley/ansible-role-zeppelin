@@ -68,3 +68,10 @@ zeppelin_java_opts:
 zeppelin_mem:
 zeppelin_intp_java_opts:
 zeppelin_intp_mem:
+
+zeppelin_spark_home:
+zeppelin_spark_submit_options:
+zeppelin_spark_app_name:
+zeppelin_hadoop_conf_dir:
+zeppelin_pyspark_python:
+zeppelin_pythonpath:
