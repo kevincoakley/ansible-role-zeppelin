@@ -4,14 +4,14 @@
 
 - name: Create the zeppelin group
   group:
-    name: zeppelin
+    name: "{{ zeppelin_service_group }}"
     state: present
     system: yes
 
 - name: Create the zeppelin user
   user:
-    name: zeppelin
-    groups: zeppelin
+    name: "{{ zeppelin_service_username }}"
+    groups: "{{ zeppelin_service_group }}"
     append: yes
     shell: /bin/bash
 
@@ -48,16 +48,16 @@
     src: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
     dest: "/opt/"
     copy: no
-    owner: zeppelin
-    group: zeppelin
+    owner: "{{ zeppelin_service_username }}"
+    group: "{{ zeppelin_service_group }}"
   when: zeppelin_install_path.stat.exists == False
 
 - name: Create a symlink for /opt/zeppelin
   file:
     src: "/opt/zeppelin-{{ zeppelin_version }}-bin-all"
     dest: /opt/zeppelin
-    owner: zeppelin
-    group: zeppelin
+    owner: "{{ zeppelin_service_username }}"
+    group: "{{ zeppelin_service_group }}"
     state: link
   when: zeppelin_install_path.stat.exists == False
 
@@ -65,8 +65,8 @@
   template:
     src: zeppelin-site.xml.j2
     dest: /opt/zeppelin/conf/zeppelin-site.xml
-    owner: zeppelin
-    group: zeppelin
+    owner: "{{ zeppelin_service_username }}"
+    group: "{{ zeppelin_service_group }}"
     mode: 0644
   notify: restart zeppelin
 
@@ -74,8 +74,8 @@
   template:
     src: zeppelin-env.sh.j2
     dest: /opt/zeppelin/conf/zeppelin-env.sh
-    owner: zeppelin
-    group: zeppelin
+    owner: "{{ zeppelin_service_username }}"
+    group: "{{ zeppelin_service_group }}"
     mode: 0644
   notify: restart zeppelin
 
@@ -91,11 +91,11 @@
      - service
 
 - name: Copy the Zeppelin systemd service file
-  copy:
-    src: "{{ role_path }}/files/zeppelin.service"
+  template:
+    src: zeppelin.service.j2
     dest: /etc/systemd/system/zeppelin.service
-    owner: zeppelin
-    group: zeppelin
+    owner: root
+    group: root
     mode: 0644
   tags:
     - service

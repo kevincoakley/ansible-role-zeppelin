@@ -2,8 +2,8 @@
 Description=Apache Zeppelin
 
 [Service]
-User=zeppelin
-Group=zeppelin
+User={{ zeppelin_service_username }}
+Group={{ zeppelin_service_username }}
 ExecStart=/opt/zeppelin/bin/zeppelin-daemon.sh upstart
 Restart=on-failure
 RestartSec=1

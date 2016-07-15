@@ -1,6 +1,8 @@
 ---
 zeppelin_version: 0.6.0
 zeppelin_download_url: http://www-us.apache.org/dist/zeppelin/zeppelin-{{ zeppelin_version }}/zeppelin-{{ zeppelin_version }}-bin-all.tgz
+zeppelin_service_username: zeppelin-service
+zeppelin_service_group: zeppelin-service
 
 # Config options for zeppelin-site.xml
 # See templates/zeppelin-site.xml.j2 for defaults.
