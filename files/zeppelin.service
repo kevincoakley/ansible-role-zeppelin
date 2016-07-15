@@ -2,6 +2,8 @@
 Description=Apache Zeppelin
 
 [Service]
+User=zeppelin
+Group=zeppelin
 ExecStart=/opt/zeppelin/bin/zeppelin-daemon.sh upstart
 Restart=on-failure
 RestartSec=1
