@@ -32,6 +32,14 @@
 #
 # Install Zeppelin
 #
+- name: Create the zeppelin_working_directory
+  file:
+    path: "{{ zeppelin_working_directory }}"
+    state: directory
+    mode: 0755
+    owner: "{{ zeppelin_service_username }}"
+    group: "{{ zeppelin_service_group }}"
+
 - name: Check if the version of Zeppelin already exists
   stat:
     path: "/opt/zeppelin-{{ zeppelin_version }}-bin-all"
