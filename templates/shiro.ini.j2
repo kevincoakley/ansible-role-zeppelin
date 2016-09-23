@@ -1,0 +1,59 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+[users]
+{% for user, pass in zeppelin_users | default({}) | dictsort %}
+{{ user }} = {{ pass }}
+{% endfor %}
+
+[main]
+{% if zeppelin_auth_active_directory_enabled %}
+activeDirectoryRealm = org.apache.zeppelin.server.ActiveDirectoryGroupRealm
+{% for option, value in zeppelin_auth_active_directory_options | default({}) | dictsort %}
+activeDirectoryRealm.{{ option }} = "{{ value }}"
+{% endfor %}
+{% endif %}
+
+{% if zeppelin_auth_ldap_enabled %}
+ldapRealm = org.apache.zeppelin.server.LdapGroupRealm
+{% for option, value in zeppelin_auth_ldap_options | default({}) | dictsort %}
+ldapRealm.{{ option }} = "{{ value }}"
+{% endfor %}
+{% endif %}
+
+sessionManager = org.apache.shiro.web.session.mgt.DefaultWebSessionManager
+{% if zeppelin_user_caching_enabled %}
+cacheManager = org.apache.shiro.cache.MemoryConstrainedCacheManager
+securityManager.cacheManager = $cacheManager
+{% endif %}
+
+securityManager.sessionManager = $sessionManager
+securityManager.sessionManager.globalSessionTimeout = {{ zeppelin_global_session_timeout }}
+shiro.loginUrl = /api/login
+
+[roles]
+{% for role, perms in zeppelin_roles | default({}) | dictsort %}
+{{ role }} = {{ perms }}
+{% endfor %}
+
+[urls]
+/api/version = anon
+{% if zeppelin_anonymous_allowed %}
+/** = anon
+{% else %}
+/** = authc
+{% endif %}
