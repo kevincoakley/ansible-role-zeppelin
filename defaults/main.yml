@@ -79,3 +79,13 @@ zeppelin_spark_app_name:
 zeppelin_hadoop_conf_dir:
 zeppelin_pyspark_python:
 zeppelin_pythonpath:
+
+# Config options for shiro.ini
+zeppelin_users: {}
+zeppelin_roles: {}
+zeppelin_auth_active_directory_enabled: no
+zeppelin_auth_active_directory_options: {}
+zeppelin_auth_ldap_enabled: no
+zeppelin_auth_ldap_options: {}
+zeppelin_user_caching_enabled: no
+zeppelin_global_session_timeout: 86400000

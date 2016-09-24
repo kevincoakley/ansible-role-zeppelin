@@ -92,6 +92,15 @@
     mode: 0644
   notify: restart zeppelin
 
+- name: Create the Zeppelin authentication config file
+  template:
+    src: shiro.ini.j2
+    dest: /opt/zeppelin/conf/shiro.ini
+    owner: "{{ zeppelin_service_username }}"
+    group: "{{ zeppelin_service_group }}"
+    mode: 0644
+  notify: restart zeppelin
+
 # In order to prevent the "restart zeppelin" handler from running when the "service" tag is skipped, set the
 # service_control fact to False and only set the service_control fact to True if the "service" tag isn't skipped.
 # In the handler yaml, only run the task when service_control is True.
