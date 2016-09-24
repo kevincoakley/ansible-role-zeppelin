@@ -110,7 +110,7 @@
     owner: root
     group: root
     mode: 0644
-  when: ansible_distribution != 'Ubuntu' or ansible_distribution_version != '14.04'
+  when: ansible_distribution_version != '14.04'
   tags:
     - service
 
