@@ -32,7 +32,7 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ zeppelin_packages }}"
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" and ansible_distribution_version != '14.04'
 
 #
 # Install Zeppelin
