@@ -7,3 +7,4 @@ ansible_host=127.0.0.1
 [zeppelin]
 ubuntu-system ansible_ssh_host=127.0.0.1 ansible_port=2200
 centos-system ansible_ssh_host=127.0.0.1 ansible_port=2222
+upstart-system ansible_ssh_host=127.0.0.1 ansible_port=2244 zeppelin_java_home=/usr/lib/jvm/java-8-oracle
