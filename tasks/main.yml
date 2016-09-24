@@ -2,6 +2,11 @@
 - name: Include OS family specific variables
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Allow user to overwrite the default java_home
+  set_fact:
+    java_home: "{{ zeppelin_java_home }}"
+  when: not( (zeppelin_java_home is undefined) or (zeppelin_java_home is none) or (zeppelin_java_home | trim == '') )
+
 - name: Create the zeppelin group
   group:
     name: "{{ zeppelin_service_group }}"

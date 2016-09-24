@@ -4,6 +4,7 @@ zeppelin_download_url: http://www-us.apache.org/dist/zeppelin/zeppelin-{{ zeppel
 zeppelin_service_username: zeppelin
 zeppelin_service_group: zeppelin
 zeppelin_working_directory: /tmp/zeppelin_working_directory
+zeppelin_java_home:
 
 # Config options for zeppelin-site.xml
 # See templates/zeppelin-site.xml.j2 for defaults.
