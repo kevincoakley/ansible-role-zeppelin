@@ -10,6 +10,7 @@ galaxy_info:
     - 7
   - name: Ubuntu
     versions:
+    - trusty
     - xenial
   #
   # Below are all categories currently available. Just as with
