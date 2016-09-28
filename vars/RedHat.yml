@@ -1,5 +1,6 @@
 ---
-zeppelin_packages:
-  - java-1.8.0-openjdk-headless
-  - sudo
-java_home: /usr/lib/jvm/jre/
+zeppelin_java_8_package: java-1.8.0-openjdk-headless
+zeppelin_java_8_home: /usr/lib/jvm/jre-1.8.0
+zeppelin_java_7_package: java-1.7.0-openjdk-headless
+zeppelin_java_7_home: /usr/lib/jvm/jre-1.7.0
+zeppelin_packages: [sudo]
