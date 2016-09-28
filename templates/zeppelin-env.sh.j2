@@ -16,7 +16,10 @@
 # limitations under the License.
 #
 
-# export JAVA_HOME=
+{% if zeppelin_java_home | default %}
+export JAVA_HOME='{{ zeppelin_java_home }}'
+{% endif %}
+
 {% if not((zeppelin_spark_master is undefined) or (zeppelin_spark_master is none) or (zeppelin_spark_master|trim == '')) %}
 export MASTER='{{ zeppelin_spark_master }}'   # Spark master url. eg. spark://master_addr:7077. Leave empty if you want to use local mode.
 {% endif %}
