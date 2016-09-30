@@ -19,7 +19,7 @@ docker_containers:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup"
   - name: upstart-system
-    image: kevincoakley/ubuntu14.04-upstart-java
+    image: ubuntu-upstart:14.04
     expose:
       - "8080"
     ports:
