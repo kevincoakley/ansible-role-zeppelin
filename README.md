@@ -8,9 +8,7 @@ Install Apache Zeppelin - https://zeppelin.apache.org . Tested with CentOS 7, Ub
 Requirements
 ------------
 
-**CentOS 7 and Ubuntu 16.04:** None
-
-**Ubuntu 14.04:** Java 1.8 and set the zepplen_java_home variable 
+None
 
 Role Variables
 --------------
