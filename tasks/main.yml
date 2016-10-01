@@ -2,11 +2,6 @@
 - name: Include OS family specific variables
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Allow user to overwrite the default java_home
-  set_fact:
-    java_home: "{{ zeppelin_java_home }}"
-  when: not( (zeppelin_java_home is undefined) or (zeppelin_java_home is none) or (zeppelin_java_home | trim == '') )
-
 - name: Create the zeppelin group
   group:
     name: "{{ zeppelin_service_group }}"
@@ -20,20 +15,39 @@
     append: yes
     shell: /bin/bash
 
-- name: Download and install the required packages (yum)
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ zeppelin_packages }}"
-  when: ansible_os_family == "RedHat"
+- name: Check if Java 8 is available from system repositories (Debian)
+  shell: apt-cache search {{ zeppelin_java_8_package }} | grep -qF {{ zeppelin_java_8_package }}
+  when: not (zeppelin_java_home | default) and ansible_os_family == 'Debian'
+  register: zeppelin_java_8_debian_check
+  failed_when: False
+  changed_when: False
 
-- name: Download and install the required packages (apt)
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ zeppelin_packages }}"
-  when: ansible_os_family == "Debian" and ansible_distribution_version != '14.04'
+- name: Check if Java 8 is available from system repositories (RedHat)
+  command: yum list {{ zeppelin_java_8_package }}
+  when: not (zeppelin_java_home | default) and ansible_os_family == 'RedHat'
+  register: zeppelin_java_8_redhat_check
+  failed_when: False
+  changed_when: False
 
+- name: Install common packages
+  package: name={{ item }}
+  with_items: "{{ zeppelin_packages }}"
+
+- name: Install Java 8 package
+  package: name={{ zeppelin_java_8_package }}
+  when: >
+    (zeppelin_java_8_debian_check.rc | default) == 0 or
+    (zeppelin_java_8_redhat_check.rc | default) == 0
+  register: zeppelin_java_8_install
+
+- name: Install Java 7 package
+  package: name={{ zeppelin_java_7_package }}
+  when: not (zeppelin_java_home | default) and (zeppelin_java_8_install | skipped)
+
+- name: Set Java home from system packages
+  set_fact:
+    zeppelin_java_home: "{{ zeppelin_java_7_home if zeppelin_java_8_install | skipped else zeppelin_java_8_home }}"
+  when: not (zeppelin_java_home | default)
 #
 # Install Zeppelin
 #
