@@ -22,16 +22,16 @@
 
 [main]
 {% if zeppelin_auth_active_directory_enabled %}
-activeDirectoryRealm = org.apache.zeppelin.server.ActiveDirectoryGroupRealm
+activeDirectoryRealm = org.apache.zeppelin.realm.ActiveDirectoryGroupRealm
 {% for option, value in zeppelin_auth_active_directory_options | default({}) | dictsort %}
-activeDirectoryRealm.{{ option }} = "{{ value }}"
+activeDirectoryRealm.{{ option }} = {{ value }}
 {% endfor %}
 {% endif %}
 
 {% if zeppelin_auth_ldap_enabled %}
-ldapRealm = org.apache.zeppelin.server.LdapGroupRealm
+ldapRealm = org.apache.zeppelin.realm.LdapGroupRealm
 {% for option, value in zeppelin_auth_ldap_options | default({}) | dictsort %}
-ldapRealm.{{ option }} = "{{ value }}"
+ldapRealm.{{ option }} = {{ value }}
 {% endfor %}
 {% endif %}
 
