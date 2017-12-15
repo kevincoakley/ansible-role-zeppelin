@@ -147,6 +147,11 @@
   tags:
     - service
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
+  register: upstart
+
+- name: Reload Upstart Configuration
+  command: /sbin/initctl reload-configuration
+  when: upstart.changed
 
 - name: Ensure Zeppelin is started and enabled on boot
   service:
