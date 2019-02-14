@@ -81,8 +81,12 @@ zeppelin_pyspark_python:
 zeppelin_pythonpath:
 
 # Config options for shiro.ini
-zeppelin_users: {}
-zeppelin_roles: {}
+zeppelin_users:
+  user: user
+  password: password
+zeppelin_roles:
+  role: role
+  perms: '*'
 zeppelin_auth_active_directory_enabled: no
 zeppelin_auth_active_directory_options: {}
 zeppelin_auth_ldap_enabled: no
