@@ -36,7 +36,7 @@ script:
   # Perform a syntax check on the playbook
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
   # Run the playbook, don't bother stopping the Docker containers
-  - ansible-playbook -i tests/inventory --skip-tags=docker-stop tests/test.yml -vvvv
+  - ansible-playbook -i tests/inventory --skip-tags=docker-stop tests/test.yml
   # Run again to test idempotence
   - >
     ansible-playbook -i tests/inventory --tags=zeppelin tests/test.yml
