@@ -11,6 +11,7 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - xenial
+    - bionic
   #
   # Below are all categories currently available. Just as with
   # the platforms above, uncomment those that apply to your role.
