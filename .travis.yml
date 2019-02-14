@@ -18,7 +18,7 @@ before_install:
   - printf "Host 127.0.0.1\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" > ~/.ssh/config
 
 install:
-  - sudo pip install docker-py
+  - sudo pip install docker
     # software-properties-common for ubuntu 14.04
   - sudo apt-get install -y sshpass software-properties-common
   - sudo apt-add-repository -y ppa:ansible/ansible
@@ -32,12 +32,11 @@ install:
 script:
   # ansible-lint checks playbooks for practices and behaviour that could potentially be improved
   # Ignore [ANSIBLE0006] yum used in place of yum module
-  # Ignore [ANSIBLE0016] Tasks that run when changed should likely be handlers
-  - ansible-lint -x ANSIBLE0006,ANSIBLE0016 -R .
+  - ansible-lint -x ANSIBLE0006 -R .
   # Perform a syntax check on the playbook
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
   # Run the playbook, don't bother stopping the Docker containers
-  - ansible-playbook -i tests/inventory --skip-tags=docker-stop tests/test.yml -vvvv
+  - ansible-playbook -i tests/inventory --skip-tags=docker-stop tests/test.yml
   # Run again to test idempotence
   - >
     ansible-playbook -i tests/inventory --tags=zeppelin tests/test.yml

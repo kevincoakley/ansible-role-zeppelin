@@ -10,4 +10,3 @@ localhost ansible_connection=local
 [zeppelin]
 ubuntu-system ansible_ssh_host=127.0.0.1 ansible_port=2200
 centos-system ansible_ssh_host=127.0.0.1 ansible_port=2222
-upstart-system ansible_ssh_host=127.0.0.1 ansible_port=2244 ansible_ssh_pass=docker.io

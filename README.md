@@ -3,7 +3,7 @@ ansible-role-zeppelin
 
 [![Build Status](https://travis-ci.org/kevincoakley/ansible-role-zeppelin.svg?branch=master)](https://travis-ci.org/kevincoakley/ansible-role-zeppelin)
 
-Install Apache Zeppelin - https://zeppelin.apache.org . Tested with CentOS 7, Ubuntu 14.04 and Ubuntu 16.04.
+Install Apache Zeppelin - https://zeppelin.apache.org . Tested with CentOS 7 and Ubuntu 18.04.
 
 Requirements
 ------------

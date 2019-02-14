@@ -1,7 +1,7 @@
 ---
 docker_containers:
   - name: ubuntu-system
-    image: kevincoakley/ubuntu16.04-systemd
+    image: kevincoakley/ubuntu18.04-systemd
     expose:
       - "8080"
     ports:
@@ -18,10 +18,3 @@ docker_containers:
       - "8082:8080"
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup"
-  - name: upstart-system
-    image: ubuntu-upstart:14.04
-    expose:
-      - "8080"
-    ports:
-      - "2244:22"
-      - "8083:8080"
