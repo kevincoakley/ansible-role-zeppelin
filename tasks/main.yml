@@ -16,13 +16,14 @@
     shell: /bin/bash
 
 - name: Update system repositories (Debian)
-  shell: apt-get update
+  apt:
+    update_cache: yes
   when: ansible_os_family == 'Debian'
-  failed_when: False
-  changed_when: False
 
 - name: Check if Java 8 is available from system repositories (Debian)
-  shell: apt-cache search {{ zeppelin_java_8_package }} | grep -qF {{ zeppelin_java_8_package }}
+  shell: set -o pipefail && apt-cache search {{ zeppelin_java_8_package }} | grep -qF {{ zeppelin_java_8_package }}
+  args:
+    executable: /bin/bash
   when: not (zeppelin_java_home | default) and ansible_os_family == 'Debian'
   register: zeppelin_java_8_debian_check
   failed_when: False
