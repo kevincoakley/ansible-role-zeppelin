@@ -137,24 +137,6 @@
   tags:
     - service
 
-- name: Copy the Upstart service file
-  template:
-    src: zeppelin.upstart.conf.j2
-    dest: /etc/init/zeppelin.conf
-    owner: root
-    group: root
-    mode: 0644
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
-  register: upstart
-  tags:
-    - service
-
-- name: Reload Upstart Configuration
-  command: /sbin/initctl reload-configuration
-  when: upstart.changed
-  tags:
-    - service
-
 - name: Ensure Zeppelin is started and enabled on boot
   service:
     name: zeppelin
