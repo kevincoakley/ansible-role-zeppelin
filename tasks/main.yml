@@ -15,6 +15,12 @@
     append: yes
     shell: /bin/bash
 
+- name: Update system repositories (Debian)
+  shell: apt-get update
+  when: ansible_os_family == 'Debian'
+  failed_when: False
+  changed_when: False
+
 - name: Check if Java 8 is available from system repositories (Debian)
   shell: apt-cache search {{ zeppelin_java_8_package }} | grep -qF {{ zeppelin_java_8_package }}
   when: not (zeppelin_java_home | default) and ansible_os_family == 'Debian'
@@ -32,6 +38,10 @@
 - name: Install common packages
   package: name={{ item }}
   with_items: "{{ zeppelin_packages }}"
+  register: zeppelin_common_install
+  until: zeppelin_common_install is success
+  retries: 10
+  delay: 2
 
 - name: Install Java 8 package
   package: name={{ zeppelin_java_8_package }}
@@ -39,14 +49,21 @@
     (zeppelin_java_8_debian_check.rc | default) == 0 or
     (zeppelin_java_8_redhat_check.rc | default) == 0
   register: zeppelin_java_8_install
+  until: zeppelin_java_8_install is success
+  retries: 10
+  delay: 2
 
 - name: Install Java 7 package
   package: name={{ zeppelin_java_7_package }}
-  when: not (zeppelin_java_home | default) and (zeppelin_java_8_install | skipped)
+  register: zeppelin_java_7_install
+  until: zeppelin_java_7_install is success
+  retries: 10
+  delay: 2
+  when: not (zeppelin_java_home | default) and (zeppelin_java_8_install is skipped)
 
 - name: Set Java home from system packages
   set_fact:
-    zeppelin_java_home: "{{ zeppelin_java_7_home if zeppelin_java_8_install | skipped else zeppelin_java_8_home }}"
+    zeppelin_java_home: "{{ zeppelin_java_7_home if zeppelin_java_8_install is skipped else zeppelin_java_8_home }}"
   when: not (zeppelin_java_home | default)
 #
 # Install Zeppelin
@@ -68,7 +85,7 @@
   get_url:
     url: "{{ zeppelin_download_url }}"
     dest: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
-  when: zeppelin_install_path.stat.exists == False
+  when: not zeppelin_install_path.stat.exists
 
 - name: Extract Zeppelin into the install directory
   unarchive:
@@ -77,7 +94,7 @@
     copy: no
     owner: "{{ zeppelin_service_username }}"
     group: "{{ zeppelin_service_group }}"
-  when: zeppelin_install_path.stat.exists == False
+  when: not zeppelin_install_path.stat.exists
 
 - name: Create a symlink for /opt/zeppelin
   file:
@@ -86,7 +103,7 @@
     owner: "{{ zeppelin_service_username }}"
     group: "{{ zeppelin_service_group }}"
     state: link
-  when: zeppelin_install_path.stat.exists == False
+  when: not zeppelin_install_path.stat.exists
 
 - name: Create the Zeppelin Site config file
   template:

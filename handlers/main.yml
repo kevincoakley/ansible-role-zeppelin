@@ -4,4 +4,4 @@
   service:
     name: zeppelin
     state: restarted
-  when: service_control == True
+  when: service_control
