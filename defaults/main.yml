@@ -1,5 +1,5 @@
 ---
-zeppelin_version: 0.8.0
+zeppelin_version: 0.8.1
 zeppelin_download_url: http://archive.apache.org/dist/zeppelin/zeppelin-{{ zeppelin_version }}/zeppelin-{{ zeppelin_version }}-bin-all.tgz
 zeppelin_service_username: zeppelin
 zeppelin_service_group: zeppelin

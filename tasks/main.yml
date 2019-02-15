@@ -18,6 +18,7 @@
 - name: Update system repositories (Debian)
   apt:
     update_cache: yes
+  changed_when: False
   when: ansible_os_family == 'Debian'
 
 - name: Check if Java 8 is available from system repositories (Debian)
