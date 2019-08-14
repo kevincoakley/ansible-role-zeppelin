@@ -1,6 +1,8 @@
 ---
-zeppelin_java_8_package: openjdk-8-jre-headless
-zeppelin_java_8_home: /usr/lib/jvm/java-8-openjdk-amd64/jre
-zeppelin_java_7_package: openjdk-7-jre-headless
-zeppelin_java_7_home: /usr/lib/jvm/java-7-openjdk-amd64/jre
+zeppelin_java_package:
+  11: openjdk-11-jre-headless
+  8: openjdk-8-jre-headless
+zeppelin_java_package_home:
+  11: /usr/lib/jvm/java-11-openjdk-amd64
+  8: /usr/lib/jvm/java-8-openjdk-amd64/jre
 zeppelin_packages: [sudo]

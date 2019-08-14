@@ -5,6 +5,11 @@ zeppelin_service_username: zeppelin
 zeppelin_service_group: zeppelin
 zeppelin_working_directory: /tmp/zeppelin_working_directory
 zeppelin_java_home:
+# Supported Java Versions:
+# CentOS 7: 11, 8, or 7
+# Ubuntu 18.04: 11 or 8
+# Ubuntu 16.04: 8
+zeppelin_java_version: 8
 
 # Config options for zeppelin-site.xml
 # See templates/zeppelin-site.xml.j2 for defaults.
