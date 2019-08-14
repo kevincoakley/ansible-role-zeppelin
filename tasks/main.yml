@@ -6,19 +6,19 @@
   group:
     name: "{{ zeppelin_service_group }}"
     state: present
-    system: yes
+    system: true
 
 - name: Create the zeppelin user
   user:
     name: "{{ zeppelin_service_username }}"
     groups: "{{ zeppelin_service_group }}"
-    append: yes
+    append: true
     shell: /bin/bash
 
 - name: Update system repositories (Debian)
   apt:
-    update_cache: yes
-  changed_when: False
+    update_cache: true
+  changed_when: false
   when: ansible_os_family == 'Debian'
 
 - name: Check if Java 8 is available from system repositories (Debian)
@@ -27,15 +27,15 @@
     executable: /bin/bash
   when: not (zeppelin_java_home | default) and ansible_os_family == 'Debian'
   register: zeppelin_java_8_debian_check
-  failed_when: False
-  changed_when: False
+  failed_when: false
+  changed_when: false
 
 - name: Check if Java 8 is available from system repositories (RedHat)
   command: yum list {{ zeppelin_java_8_package }}
   when: not (zeppelin_java_home | default) and ansible_os_family == 'RedHat'
   register: zeppelin_java_8_redhat_check
-  failed_when: False
-  changed_when: False
+  failed_when: false
+  changed_when: false
 
 - name: Install common packages
   package: name={{ item }}
@@ -93,7 +93,7 @@
   unarchive:
     src: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
     dest: "/opt/"
-    copy: no
+    copy: false
     owner: "{{ zeppelin_service_username }}"
     group: "{{ zeppelin_service_group }}"
   when: not zeppelin_install_path.stat.exists
@@ -143,7 +143,7 @@
 - name: Change the service_control fact to True
   set_fact: service_control=True
   tags:
-     - service
+    - service
 
 - name: Copy the Zeppelin systemd service file
   template:
@@ -160,6 +160,6 @@
   service:
     name: zeppelin
     state: started
-    enabled: yes
+    enabled: true
   tags:
-     - service
+    - service

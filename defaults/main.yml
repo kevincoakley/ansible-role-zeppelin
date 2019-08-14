@@ -16,31 +16,31 @@ zeppelin_notebook_dir: notebook
 zeppelin_notebook_homescreen:
 zeppelin_notebook_homescreen_hide: false
 
-zeppelin_notebook_s3_storage_enabled: False
+zeppelin_notebook_s3_storage_enabled: false
 zeppelin_notebook_s3_user: user
 zeppelin_notebook_s3_bucket: zeppelin
 zeppelin_notebook_s3_endpoint: s3.amazonaws.com
 zeppelin_notebook_s3_storage: org.apache.zeppelin.notebook.repo.S3NotebookRepo
 
-zeppelin_notebook_s3_storage_kms: False
+zeppelin_notebook_s3_storage_kms: false
 zeppelin_notebook_s3_kmsKeyID: AWS-KMS-Key-UUID
 
-zeppelin_notebook_s3_encryption_materials_provider: False
+zeppelin_notebook_s3_encryption_materials_provider: false
 zeppelin_notebook_s3_encryptionMaterialsProvider: provider implementation class name
 
-zeppelin_notebook_azure_storage_enabled: False
+zeppelin_notebook_azure_storage_enabled: false
 zeppelin_notebook_azure_connectionString: DefaultEndpointsProtocol=https;AccountName=<accountName>;AccountKey=<accountKey>
 zeppelin_notebook_azure_share: zeppelin
 zeppelin_notebook_azure_user: user
 zeppelin_notebook_azure_storage: org.apache.zeppelin.notebook.repo.AzureNotebookRepo
 
-zeppelin_notebook_git_storage_enabled: False
+zeppelin_notebook_git_storage_enabled: false
 zeppelin_notebook_git_storage: org.apache.zeppelin.notebook.repo.GitNotebookRepo
 
-zeppelin_notebook_zeppelinhub_storage_enabled: False
+zeppelin_notebook_zeppelinhub_storage_enabled: false
 zeppelin_notebook_zeppelinhub_storage: org.apache.zeppelin.notebook.repo.VFSNotebookRepo, org.apache.zeppelin.notebook.repo.zeppelinhub.ZeppelinHubRepo
 
-zeppelin_notebook_local_storage_enabled: True
+zeppelin_notebook_local_storage_enabled: true
 zeppelin_notebook_local_storage: org.apache.zeppelin.notebook.repo.VFSNotebookRepo
 
 zeppelin_interpreter_dir: interpreter
@@ -87,9 +87,9 @@ zeppelin_users:
 zeppelin_roles:
   role: role
   perms: '*'
-zeppelin_auth_active_directory_enabled: no
+zeppelin_auth_active_directory_enabled: false
 zeppelin_auth_active_directory_options: {}
-zeppelin_auth_ldap_enabled: no
+zeppelin_auth_ldap_enabled: false
 zeppelin_auth_ldap_options: {}
-zeppelin_user_caching_enabled: no
+zeppelin_user_caching_enabled: false
 zeppelin_global_session_timeout: 86400000
