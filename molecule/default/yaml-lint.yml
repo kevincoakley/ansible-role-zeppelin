@@ -1,0 +1,6 @@
+---
+extends: default
+rules:
+  line-length:
+    max: 2000
+    level: warning

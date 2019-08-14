@@ -1,0 +1,24 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    - zeppelin_working_directory: /zeppelin_working_directory
+    - zeppelin_mem: "-Xmx512m -XX:MaxPermSize=256m"
+
+  roles:
+    - role: ansible-role-zeppelin
+
+  post_tasks:
+    - name: Restart any services before running the tests
+      meta: flush_handlers
+
+    - name: Give the Zeppelin time to start
+      pause:
+        seconds: 60
+
+    - name: Verify that Zeppelin is running on port 8080
+      uri:
+        url: http://127.0.0.1:8080
+        status_code: 200
