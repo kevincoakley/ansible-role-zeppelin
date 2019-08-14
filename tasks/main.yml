@@ -6,36 +6,30 @@
   group:
     name: "{{ zeppelin_service_group }}"
     state: present
-    system: yes
+    system: true
 
 - name: Create the zeppelin user
   user:
     name: "{{ zeppelin_service_username }}"
     groups: "{{ zeppelin_service_group }}"
-    append: yes
+    append: true
     shell: /bin/bash
 
 - name: Update system repositories (Debian)
   apt:
-    update_cache: yes
-  changed_when: False
+    update_cache: true
+    cache_valid_time: 3600
+  changed_when: false
   when: ansible_os_family == 'Debian'
 
-- name: Check if Java 8 is available from system repositories (Debian)
-  shell: set -o pipefail && apt-cache search {{ zeppelin_java_8_package }} | grep -qF {{ zeppelin_java_8_package }}
-  args:
-    executable: /bin/bash
-  when: not (zeppelin_java_home | default) and ansible_os_family == 'Debian'
-  register: zeppelin_java_8_debian_check
-  failed_when: False
-  changed_when: False
-
-- name: Check if Java 8 is available from system repositories (RedHat)
-  command: yum list {{ zeppelin_java_8_package }}
-  when: not (zeppelin_java_home | default) and ansible_os_family == 'RedHat'
-  register: zeppelin_java_8_redhat_check
-  failed_when: False
-  changed_when: False
+# See: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
+- name: Ensure 'man' directory exists.
+  file:
+    path: /usr/share/man/man1
+    state: directory
+    recurse: true
+  when:
+    - ansible_distribution == 'Ubuntu'
 
 - name: Install common packages
   package: name={{ item }}
@@ -45,28 +39,19 @@
   retries: 10
   delay: 2
 
-- name: Install Java 8 package
-  package: name={{ zeppelin_java_8_package }}
-  when: >
-    (zeppelin_java_8_debian_check.rc | default) == 0 or
-    (zeppelin_java_8_redhat_check.rc | default) == 0
-  register: zeppelin_java_8_install
-  until: zeppelin_java_8_install is success
+- name: Install Java packages
+  package: name={{ item }}
+  with_items: "{{ zeppelin_java_package[zeppelin_java_version] }}"
+  register: zeppelin_java_install
+  until: zeppelin_java_install is success
   retries: 10
   delay: 2
-
-- name: Install Java 7 package
-  package: name={{ zeppelin_java_7_package }}
-  register: zeppelin_java_7_install
-  until: zeppelin_java_7_install is success
-  retries: 10
-  delay: 2
-  when: not (zeppelin_java_home | default) and (zeppelin_java_8_install is skipped)
 
 - name: Set Java home from system packages
   set_fact:
-    zeppelin_java_home: "{{ zeppelin_java_7_home if zeppelin_java_8_install is skipped else zeppelin_java_8_home }}"
+    zeppelin_java_home: "{{ zeppelin_java_package_home[zeppelin_java_version] }}"
   when: not (zeppelin_java_home | default)
+
 #
 # Install Zeppelin
 #
@@ -93,7 +78,7 @@
   unarchive:
     src: "/tmp/zeppelin-{{ zeppelin_version }}.tgz"
     dest: "/opt/"
-    copy: no
+    copy: false
     owner: "{{ zeppelin_service_username }}"
     group: "{{ zeppelin_service_group }}"
   when: not zeppelin_install_path.stat.exists
@@ -143,7 +128,7 @@
 - name: Change the service_control fact to True
   set_fact: service_control=True
   tags:
-     - service
+    - service
 
 - name: Copy the Zeppelin systemd service file
   template:
@@ -160,6 +145,6 @@
   service:
     name: zeppelin
     state: started
-    enabled: yes
+    enabled: true
   tags:
-     - service
+    - service
