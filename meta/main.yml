@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: zeppelin
   author: Kevin Coakley
   description: Install Apache Zeppelin (https://zeppelin.apache.org)
   # If the issue tracker for your role is not on github, uncomment the
