@@ -6,15 +6,16 @@ galaxy_info:
   description: Install Apache Zeppelin (https://zeppelin.apache.org)
   # If the issue tracker for your role is not on github, uncomment the
   license: BSD
-  min_ansible_version: 2.0
+  min_ansible_version: 2.5
   platforms:
     - name: EL
       versions:
         - 7
+        - 8
     - name: Ubuntu
       versions:
-        - xenial
         - bionic
+        - focal
   #
   # Below are all categories currently available. Just as with
   # the platforms above, uncomment those that apply to your role.
