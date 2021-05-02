@@ -4,6 +4,7 @@
   become: true
 
   vars:
+    - zeppelin_java_version: "{{ lookup('env','JAVA_VERSION') | default('11', True) }}"
     - zeppelin_working_directory: /zeppelin_working_directory
     - zeppelin_mem: "-Xmx512m -XX:MaxPermSize=256m"
 
