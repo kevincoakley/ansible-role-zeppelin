@@ -41,7 +41,7 @@
 
 - name: Install Java packages
   package: name={{ item }}
-  with_items: "{{ zeppelin_java_package[zeppelin_java_version] }}"
+  with_items: "{{ zeppelin_java_package[zeppelin_java_version|string] }}"
   register: zeppelin_java_install
   until: zeppelin_java_install is success
   retries: 10
@@ -49,7 +49,7 @@
 
 - name: Set Java home from system packages
   set_fact:
-    zeppelin_java_home: "{{ zeppelin_java_package_home[zeppelin_java_version] }}"
+    zeppelin_java_home: "{{ zeppelin_java_package_home[zeppelin_java_version|string] }}"
   when: not (zeppelin_java_home | default)
 
 #
