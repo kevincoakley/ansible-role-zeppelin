@@ -1,0 +1,3 @@
+{
+  "postCreateCommand": "pip install ansible ansible-lint flake8 molecule molecule-docker docker yamllint -U"
+}
