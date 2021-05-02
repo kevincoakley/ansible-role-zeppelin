@@ -1,0 +1,22 @@
+---
+# See: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
+- name: Ensure 'man' directory exists.
+  file:
+    path: /usr/share/man/man1
+    state: directory
+    recurse: true
+  when: ansible_distribution == 'Ubuntu'
+
+- name: fail on unsupported java version (18.04)
+  fail:
+    msg: "Java version must be 8 or 11"
+  when:
+    - zeppelin_java_version|string not in ["8", "11"]
+    - ansible_distribution_version == "18.04"
+
+- name: fail on unsupported java version (20.04)
+  fail:
+    msg: "Java version must be 8, 11, 13 or 14"
+  when:
+    - zeppelin_java_version|string not in ["8", "11", "13", "14"]
+    - ansible_distribution_version == "20.04"
