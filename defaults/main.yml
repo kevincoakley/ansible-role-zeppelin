@@ -1,15 +1,16 @@
 ---
-zeppelin_version: 0.8.1
+zeppelin_version: 0.9.0
 zeppelin_download_url: http://archive.apache.org/dist/zeppelin/zeppelin-{{ zeppelin_version }}/zeppelin-{{ zeppelin_version }}-bin-all.tgz
 zeppelin_service_username: zeppelin
 zeppelin_service_group: zeppelin
 zeppelin_working_directory: /tmp/zeppelin_working_directory
 zeppelin_java_home:
 # Supported Java Versions:
-# CentOS 7: 11, 8, or 7
+# CentOS 7: latest, 11, 8, or 7
+# CentOS 8: latest, 11, 8
 # Ubuntu 18.04: 11 or 8
-# Ubuntu 16.04: 8
-zeppelin_java_version: 8
+# Ubuntu 20.04: 14, 13, 11, or 8
+zeppelin_java_version: 11
 
 # Config options for zeppelin-site.xml
 # See templates/zeppelin-site.xml.j2 for defaults.

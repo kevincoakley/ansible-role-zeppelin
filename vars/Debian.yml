@@ -1,8 +1,12 @@
 ---
 zeppelin_java_package:
-  11: openjdk-11-jre-headless
-  8: openjdk-8-jre-headless
+  "14": openjdk-14-jre-headless
+  "13": openjdk-13-jre-headless
+  "11": openjdk-11-jre-headless
+  "8": openjdk-8-jre-headless
 zeppelin_java_package_home:
-  11: /usr/lib/jvm/java-11-openjdk-amd64
-  8: /usr/lib/jvm/java-8-openjdk-amd64/jre
+  "14": /usr/lib/jvm/java-14-openjdk-amd64
+  "13": /usr/lib/jvm/java-13-openjdk-amd64
+  "11": /usr/lib/jvm/java-11-openjdk-amd64
+  "8": /usr/lib/jvm/java-8-openjdk-amd64/jre
 zeppelin_packages: [sudo]
