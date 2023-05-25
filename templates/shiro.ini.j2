@@ -16,8 +16,12 @@
 #
 
 [users]
-{% for user, pass in zeppelin_users | default({}) | dictsort %}
-{{ user }} = {{ pass }}
+{% for user in zeppelin_users %}
+{% if user.roles %}
+{{ user.name }} = {{ user.password }}, {{ user.roles | join(', ') }}
+{% else %}
+{{ user.name }} = {{ user.password }}
+{% endif %}
 {% endfor %}
 
 [main]
@@ -46,8 +50,8 @@ securityManager.sessionManager.globalSessionTimeout = {{ zeppelin_global_session
 shiro.loginUrl = /api/login
 
 [roles]
-{% for role, perms in zeppelin_roles | default({}) | dictsort %}
-{{ role }} = {{ perms }}
+{% for role in zeppelin_roles %}
+{{ role.name }} = {{ role.value }}
 {% endfor %}
 
 [urls]
