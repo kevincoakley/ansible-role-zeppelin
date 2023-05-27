@@ -1,5 +1,5 @@
 ---
-zeppelin_version: 0.9.0
+zeppelin_version: 0.10.1
 zeppelin_download_url: http://archive.apache.org/dist/zeppelin/zeppelin-{{ zeppelin_version }}/zeppelin-{{ zeppelin_version }}-bin-all.tgz
 zeppelin_service_username: zeppelin
 zeppelin_service_group: zeppelin
@@ -87,8 +87,15 @@ zeppelin_pyspark_python:
 zeppelin_pythonpath:
 
 # Config options for shiro.ini
-zeppelin_users: [{name: 'admin', password: 'password', roles: ['admin']}]
+zeppelin_users: [
+  {name: 'admin', password: 'password', roles: ['admin']},
+  {name: 'user', password: 'pass', roles: ['user']}
+]
 zeppelin_roles: [{name: 'admin', value: '*'}]
+zeppelin_urls: [
+  {roles: ['admin'], url: '/api/interpreter/**', value: 'authc'},
+  {roles: ['admin'], url: '/api/configurations/**', value: 'authc'}
+]
 zeppelin_auth_active_directory_enabled: false
 zeppelin_auth_active_directory_options: {}
 zeppelin_auth_ldap_enabled: false
