@@ -267,4 +267,18 @@
   <description>Size in characters of the maximum text message to be received by websocket. Defaults to 1024000</description>
 </property>
 
+{% if zeppelin_server_kerberos_enabled == True %}
+<property>
+  <name>zeppelin.server.kerberos.keytab</name>
+  <value>{{ zeppelin_server_kerberos_keytab }}</value>
+</property>
+{% endif %}
+
+{% if zeppelin_server_kerberos_principal != "change me" %}
+<property>
+  <name>zeppelin.server.kerberos.principal</name>
+  <value>{{ zeppelin_server_kerberos_principal }}</value>
+</property>
+{% endif %}
+
 </configuration>

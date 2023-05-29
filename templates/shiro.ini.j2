@@ -56,8 +56,6 @@ shiro.loginUrl = /api/login
 
 [urls]
 /api/version = anon
-{% if zeppelin_anonymous_allowed %}
-/** = anon
-{% else %}
-/** = authc
-{% endif %}
+{% for perms in zeppelin_urls %}
+{{ perms.url }} = {{ perms.value }}, roles[{{ perms.roles | join(', ') }}]
+{% endfor %}
