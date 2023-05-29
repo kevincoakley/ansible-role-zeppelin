@@ -59,8 +59,3 @@ shiro.loginUrl = /api/login
 {% for perms in zeppelin_urls %}
 {{ perms.url }} = {{ perms.value }}, roles[{{ perms.roles | join(', ') }}]
 {% endfor %}
-{% if zeppelin_anonymous_allowed %}
-/** = anon
-{% else %}
-/** = authc
-{% endif %}

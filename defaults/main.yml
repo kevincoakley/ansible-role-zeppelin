@@ -87,15 +87,23 @@ zeppelin_pyspark_python:
 zeppelin_pythonpath:
 
 # Config options for shiro.ini
-zeppelin_users: [
-  {name: 'admin', password: 'password', roles: ['admin']},
-  {name: 'user', password: 'pass', roles: ['user']}
-]
-zeppelin_roles: [{name: 'admin', value: '*'}]
-zeppelin_urls: [
-  {roles: ['admin'], url: '/api/interpreter/**', value: 'authc'},
-  {roles: ['admin'], url: '/api/configurations/**', value: 'authc'}
-]
+zeppelin_users:
+  - name: admin
+    password: password
+    roles: [admin]
+  - name: user
+    password: pass
+    roles: [user]
+zeppelin_roles:
+  - name: admin
+    value: "*"
+zeppelin_urls:
+  - roles: [admin]
+    url: /api/interpreter/**
+    value: authc
+  - roles: [admin]
+    url: /api/configurations/**
+    value: authc
 zeppelin_auth_active_directory_enabled: false
 zeppelin_auth_active_directory_options: {}
 zeppelin_auth_ldap_enabled: false
