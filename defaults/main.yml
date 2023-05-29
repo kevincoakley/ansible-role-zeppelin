@@ -110,3 +110,7 @@ zeppelin_auth_ldap_enabled: false
 zeppelin_auth_ldap_options: {}
 zeppelin_user_caching_enabled: false
 zeppelin_global_session_timeout: 86400000
+
+zeppelin_server_kerberos_enabled: false
+zeppelin_server_kerberos_keytab: /etc/security/keytabs/zeppelin.server.kerberos.keytab
+zeppelin_server_kerberos_principal: change me
